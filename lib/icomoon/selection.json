@@ -1,0 +1,216 @@
+{
+	"IcoMoonType": "selection",
+	"icons": [
+		{
+			"icon": {
+				"paths": [
+					"M960 0h-896c-35.328 0-64 28.672-64 64v640c0 35.328 28.672 64 64 64h256l-128 256h32l230.4-256h115.2l230.4 256h32l-128-256h256c35.328 0 64-28.672 64-64v-640c0-35.328-28.672-64-64-64zM960 672c0 17.696-14.304 32-32 32h-832c-17.696 0-32-14.304-32-32v-576c0-17.696 14.304-32 32-32h832c17.696 0 32 14.304 32 32v576zM668.096 500.192l-144.672-372.128-158.016 297.28-88.192-90.72-149.216 92.992 42.112 24.256 95.616-59.584 115.36 118.784 133.6-251.296 147.712 380.128 125.984-265.216 51.328 109.248 56.288-9.44-107.328-228.224-120.576 253.92z"
+				],
+				"attrs": [
+					{}
+				],
+				"isMulticolor": false,
+				"tags": [
+					"stats",
+					"monitor",
+					"board"
+				],
+				"grid": 16
+			},
+			"attrs": [
+				{}
+			],
+			"properties": {
+				"order": 1,
+				"id": 0,
+				"prevSize": 32,
+				"code": 58883,
+				"name": "stats2"
+			},
+			"setIdx": 0,
+			"setId": 9,
+			"iconIdx": 0
+		},
+		{
+			"icon": {
+				"paths": [
+					"M448 304c0-26.4 21.6-48 48-48h32c26.4 0 48 21.6 48 48v32c0 26.4-21.6 48-48 48h-32c-26.4 0-48-21.6-48-48v-32z",
+					"M640 768h-256v-64h64v-192h-64v-64h192v256h64z",
+					"M512 0c-282.77 0-512 229.23-512 512s229.23 512 512 512 512-229.23 512-512-229.23-512-512-512zM512 928c-229.75 0-416-186.25-416-416s186.25-416 416-416 416 186.25 416 416-186.25 416-416 416z"
+				],
+				"attrs": [],
+				"isMulticolor": false,
+				"tags": [
+					"info",
+					"information"
+				],
+				"defaultCode": 60768,
+				"grid": 16
+			},
+			"attrs": [],
+			"properties": {
+				"id": 965,
+				"order": 8,
+				"prevSize": 32,
+				"code": 59916,
+				"ligatures": "info, information",
+				"name": "info"
+			},
+			"setIdx": 2,
+			"setId": 7,
+			"iconIdx": 268
+		},
+		{
+			"icon": {
+				"paths": [
+					"M426.667 384h170.667v-128h128l-213.333-213.333-213.333 213.333h128v128zM384 426.667h-128v-128l-213.333 213.333 213.333 213.333v-128h128v-170.667zM981.333 512l-213.333-213.333v128h-128v170.667h128v128l213.333-213.333zM597.333 640h-170.667v128h-128l213.333 213.333 213.333-213.333h-128v-128z"
+				],
+				"attrs": [],
+				"isMulticolor": false,
+				"tags": [
+					"open-with"
+				],
+				"grid": 24
+			},
+			"attrs": [],
+			"properties": {
+				"id": 73,
+				"order": 5,
+				"prevSize": 24,
+				"code": 58880,
+				"name": "open-with"
+			},
+			"setIdx": 3,
+			"setId": 5,
+			"iconIdx": 73
+		},
+		{
+			"icon": {
+				"paths": [
+					"M341.333 213.333v597.333l469.333-298.667z"
+				],
+				"attrs": [],
+				"isMulticolor": false,
+				"tags": [
+					"play-arrow"
+				],
+				"grid": 24
+			},
+			"attrs": [],
+			"properties": {
+				"id": 187,
+				"order": 1,
+				"prevSize": 24,
+				"code": 58881,
+				"name": "play-arrow"
+			},
+			"setIdx": 3,
+			"setId": 5,
+			"iconIdx": 187
+		},
+		{
+			"icon": {
+				"paths": [
+					"M256 256h512v512h-512z"
+				],
+				"attrs": [],
+				"isMulticolor": false,
+				"tags": [
+					"stop"
+				],
+				"grid": 24
+			},
+			"attrs": [],
+			"properties": {
+				"id": 203,
+				"order": 2,
+				"prevSize": 24,
+				"code": 58882,
+				"name": "stop"
+			},
+			"setIdx": 3,
+			"setId": 5,
+			"iconIdx": 203
+		},
+		{
+			"icon": {
+				"paths": [
+					"M512 341.333c-94.293 0-170.667 76.373-170.667 170.667s76.373 170.667 170.667 170.667 170.667-76.373 170.667-170.667-76.373-170.667-170.667-170.667zM893.44 469.333c-19.627-177.92-160.853-319.147-338.773-338.773v-87.893h-85.333v87.893c-177.92 19.627-319.147 160.853-338.773 338.773h-87.893v85.333h87.893c19.627 177.92 160.853 319.147 338.773 338.773v87.893h85.333v-87.893c177.92-19.627 319.147-160.853 338.773-338.773h87.893v-85.333h-87.893zM512 810.667c-164.907 0-298.667-133.76-298.667-298.667s133.76-298.667 298.667-298.667 298.667 133.76 298.667 298.667-133.76 298.667-298.667 298.667z"
+				],
+				"attrs": [],
+				"isMulticolor": false,
+				"tags": [
+					"gps-fixed"
+				],
+				"grid": 24
+			},
+			"attrs": [],
+			"properties": {
+				"id": 322,
+				"order": 9,
+				"prevSize": 24,
+				"code": 58884,
+				"name": "gps-fixed"
+			},
+			"setIdx": 3,
+			"setId": 5,
+			"iconIdx": 322
+		},
+		{
+			"icon": {
+				"paths": [
+					"M426.667 256l-60.373 60.373 195.627 195.627-195.627 195.627 60.373 60.373 256-256z"
+				],
+				"attrs": [],
+				"isMulticolor": false,
+				"tags": [
+					"navigate-next"
+				],
+				"grid": 24
+			},
+			"attrs": [],
+			"properties": {
+				"id": 580,
+				"order": 3,
+				"prevSize": 24,
+				"code": 58887,
+				"name": "navigate-next"
+			},
+			"setIdx": 3,
+			"setId": 5,
+			"iconIdx": 580
+		}
+	],
+	"height": 1024,
+	"metadata": {
+		"name": "icomoon"
+	},
+	"preferences": {
+		"showGlyphs": true,
+		"showQuickUse": true,
+		"showQuickUse2": true,
+		"showSVGs": true,
+		"fontPref": {
+			"prefix": "icon-",
+			"metadata": {
+				"fontFamily": "icomoon"
+			},
+			"metrics": {
+				"emSize": 1024,
+				"baseline": 6.25,
+				"whitespace": 50
+			},
+			"embed": false
+		},
+		"imagePref": {
+			"prefix": "icon-",
+			"png": true,
+			"useClassSelector": true,
+			"color": 4473924,
+			"bgColor": 16777215
+		},
+		"historySize": 100,
+		"showCodes": true,
+		"gridSize": 16
+	}
+}

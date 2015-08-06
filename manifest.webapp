@@ -1,0 +1,17 @@
+{
+  "name": "World Map Skiller",
+  "description": "Geography app to learn world countries in a fun way.",
+  "version": "1.0.0",
+  "launch_path": "/app.html",
+  "fullscreen": "false",
+  "icons": {
+    "48": "/img/WorldMapSkiller-icon-48.png",
+    "60": "/img/WorldMapSkiller-icon-60.png",
+    "128": "/img/WorldMapSkiller-icon-128.png"
+  },
+  "developer": {
+    "name": "Valéry Febvre",
+    "url": "https://github.com/valos/WorldMapSkiller"
+  },
+  "orientation": ["portrait"]
+}

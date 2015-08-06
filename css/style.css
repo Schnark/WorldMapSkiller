@@ -1,0 +1,222 @@
+/*
+ WorldMapSkiller
+
+ written by Valéry Febvre
+ vfebvre@aester-eggs.com
+
+ Copyright 2015 Valéry Febvre
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU Affero General Public License as
+ published by the Free Software Foundation, either version 3 of the
+ License, or (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU Affero General Public License for more details.
+
+ You should have received a copy of the GNU Affero General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+* {
+    font-family: FiraSans, sans-serif;
+}
+
+.button {
+    border-radius: 3px !important;
+}
+
+section[role="region"] header h2 {
+    padding: 0.8rem 1.5rem;
+}
+section[role="region"] > header:first-child button {
+    font-style: normal;
+}
+
+.leaflet-container {
+    background: #C5EFF7 !important;
+}
+
+/*
+ * Map boxes and overlay
+ */
+
+.map-box {
+    right: 0px;
+    width: 100%;
+    position: absolute;
+    z-index: 2;
+    pointer-events: none;
+}
+.map-box .content {
+    width: 100%;
+    padding: 4px 4px 2px 4px;
+    cursor: auto;
+    position: relative;
+    display: none;
+    pointer-events: auto;
+}
+
+#map-box-top {
+    top: 5em;
+}
+#map-box-top .content {
+    background: rgba(255, 255, 255, 0.7);
+    box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.2);
+}
+#map-box-top .content .f32 {
+    float: right;
+    margin: 0 8px;
+}
+#map-box-top .content .f32 .flag {
+    vertical-align: middle;
+}
+#map-box-top .content p {
+    font-size: 1rem;
+    line-height: 1.3rem;
+    margin: 2px;
+}
+
+#map-box-bottom {
+    bottom: 4.5em;
+}
+#map-box-bottom .content {
+    background: rgba(255, 0, 0, 0.7);
+    box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.2);
+}
+
+#map-overlay {
+    position: absolute;
+    left: 0%;
+    top: 45%;
+    width: 100%;
+    text-align: center;
+    text-shadow: 1px 0 2px #DDDDDD;
+    font-size: 45px;
+    font-weight: bold;
+    color: #333;
+    z-index: 2;
+}
+
+/*
+ * Toolbars
+ */
+[role="toolbar"] {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.85);
+    border-top: none;
+}
+[role="toolbar"] span {
+    flex: 1;
+    position: relative;
+}
+
+/* adjust color, size and position of icomoon icons in toolbars */
+[role="toolbar"] button {
+    color: white;
+}
+[class^="icon-"], [class*=" icon-"] {
+    font-size: 2rem !important;
+}
+
+/*
+ * Stats
+ */
+
+section[data-type="list"] li p:last-of-type {
+    font-size: 1rem;
+}
+section[data-type="list"] li .f32 {
+    line-height: 4.5rem;
+}
+section[data-type="list"] aside.pack-end p {
+    font-size: 1rem;
+    margin: 0;
+    padding: 0 0 0 1.5rem;
+    line-height: 1.5rem;
+    color: #333;
+}
+
+#stats section:first-of-type p {
+    font-size: 1rem;
+    line-height: 1rem;
+}
+
+#stats-bar {
+    display: flex;
+    box-sizing: border-box;
+    width: 100%;
+}
+#stats-bar span {
+    position: relative;
+    flex: 1;
+    margin: 0 8px 0 0;
+    padding: 0;
+    text-align: center;
+    height: 100%;
+    font-weight: bold;
+    font-size: 3rem;
+    border: 1px #858585 solid;
+    color: #333;
+}
+#stats-bar span:last-of-type {
+    margin: 0;
+}
+#stats-bar span .title {
+    background: #858585;
+    color: #fff;
+    font-size: 1rem;
+    line-height: 2rem;
+}
+
+/*
+ * Pages animations
+ */
+[data-position="right"] {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transform: translateX(100%);
+    -webkit-transform: translateX(100%);
+}
+
+[data-position="left"] {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transform: translateX(-100%);
+    -webkit-transform: translateX(-100%);
+}
+
+.leftToCurrent {
+    animation: leftToCurrent 0.4s forwards;
+    -webkit-animation: leftToCurrent 0.4s forwards;
+}
+.currentToLeft {
+    animation: currentToLeft 0.4s forwards;
+    -webkit-animation: leftToCurrent 0.4s forwards;
+}
+.rightToCurrent {
+    animation: rightToCurrent 0.4s forwards;
+    -webkit-animation: leftToCurrent 0.4s forwards;
+}
+.currentToRight {
+    animation: currentToRight 0.4s forwards;
+    -webkit-animation: leftToCurrent 0.4s forwards;
+}
+.show {
+    animation: show 0.4s forwards;
+    -webkit-animation: show 0.4s forwards;
+}
+.hide {
+    animation: hide 0.4s forwards;
+    -webkit-animation: hide 0.4s forwards;
+}
