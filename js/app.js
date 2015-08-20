@@ -23,19 +23,32 @@
 var App = {
     name: 'WorldMapSkiller',
     countries: null,
-    worldMap: null,
     store: null,
 
-    $currentPage: $('#world-map'),
+    worldMap: null,
+    stats: null,
+
+    $splashMessage: $('#splash-message'),
+    $splashMessageContent: $('#splash-message span'),
+
+    animations: [
+        'bounceInDown',
+        'lightSpeedIn',
+        'tada',
+        'rubberBand',
+        'flip',
+        'rotateIn',
+        'zoomInDown'
+    ],
 
     // Initialize and start app
     start: function() {
         // about
-        $('#about-open').on('click', function () {
+        $('#about-open').on('click', function() {
             $('#about').attr('class', 'leftToCurrent');
             $('#world-map').attr('class', 'currentToRight');
         });
-        $('#about-close').on('click', function () {
+        $('#about-close').on('click', function() {
             $('#world-map').attr('class', 'rightToCurrent');
             $('#about').attr('class', 'currentToLeft');
         });
@@ -46,11 +59,19 @@ var App = {
             App.store.write('stats', {});
         }
 
+        // init map overlay: set line-height CSS property
+        App.$splashMessage.css('line-height', (window.innerHeight - 95) + 'px');
+
+        App.showSplashMessage('Loading...', 'none');
+
         // load countries GeoJSON data and start app
-        $.getJSON('data/ne_110m_admin_0_map_units.geo.json', function(data) {
+        $.getJSON('data/ne_110m_admin_0_countries.geo.json', function(data) {
             App.countries = data.features;
+
             App.worldMap = new WorldMap();
             App.stats = new Stats();
+
+            App.hideSplashMessage();
         });
     },
 
@@ -68,13 +89,42 @@ var App = {
         }
 
         return {
-            code: properties.adm0_a3,
+            code: properties.gu_a3,
             name: properties.name_long,
             continent: properties.continent + (properties.continent !== properties.subregion ? ' / ' + properties.subregion : ''),
             population: (properties.pop_est / 1000000).toFixed(1),        
             flag: flag
         };
 
+    },
+
+    hideSplashMessage: function() {
+        App.$splashMessageContent.removeClass().empty();
+        App.$splashMessage.hide();
+    },
+
+    showSplashMessage: function(message, animation, animationendCb) {
+        if (!animation) {
+            animation = App.animations[Math.floor(Math.random() * App.animations.length)];
+        }
+
+        App.$splashMessageContent.html(message);
+        App.$splashMessage.show();
+        if (animation === 'none') {
+            return;
+        }
+
+        App.$splashMessageContent
+            .removeClass()
+            .addClass(animation + ' animated')
+            .one('webkitAnimationEnd oAnimationEnd animationend', function(e) {
+                window.setTimeout(function () {
+                    App.hideSplashMessage();
+                    if (animationendCb) {
+                        animationendCb();
+                    }
+                }, 1500);
+            });
     }
 };
 

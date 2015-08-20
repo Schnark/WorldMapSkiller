@@ -52,9 +52,8 @@
 
     <article>
       <div id="map"></div>
-      <div class="map-box" id="map-box-top"><div class="content"></div></div>
-      <div class="map-box" id="map-box-bottom"><div class="content"></div></div>
-      <div id="map-overlay"></div>
+      <div class="map-box" id="map-box-top"><div></div></div>
+      <div class="map-box" id="map-box-bottom"><div></div></div>
     </article>
 
     <div role="toolbar">
@@ -92,45 +91,69 @@
             <div id="overall-score-avg"></div>
           </span>
         </div>
-        <p><b>Best</b>: average number of trials using the <u>best</u> score by country</p>
-        <p><b>Last</b>: average number of trials using the <u>last</u> score by country</p>
-        <p><b>Avg.</b>: average number of trials using the <u>avg.</u> score by country</p>
+
+        <div id="stats-bar-help">
+          <p><b>Best</b>: average number of tries using the <u>best</u> score by country</p>
+          <p><b>Last</b>: average number of tries using the <u>last</u> score by country</p>
+          <p><b>Avg.</b>: average number of tries using the <u>avg.</u> score by country</p>
+        </div>
       </section>
 
       <header>
-        <h2>Score by country</h2>
+        <h2>Score by country <span id="stats-validated-counter"></span></h2>
       </header>
       <section data-type="list">
         <ul id="stats-list"></ul>
       </section>
+
+      <section>
+        <p>
+          <button id="stats-clear" class="button" type="button">Clear scores</button>
+        </p>
+      </section>
     </article>
+
+    <form id="stats-clear-dialog" role="dialog" data-type="confirm" class="hide">
+      <section>
+        <h1>Clear scores</h1>
+        <p data-l10n-id="delete-document">Are you sure to clear your scores?</p>
+      </section>
+      <menu>
+        <button id="stats-clear-cancel" class="button" data-l10n-id="cancel">Cancel</button>
+        <button id="stats-clear-validate" class="button danger" data-l10n-id="ok">OK</button>
+      </menu>
+    </form>
   </section>
 
   <!--···························· About ····························-->
   <section id="about" role="region" data-position="left">
     <form role="dialog" data-type="confirm">
       <section>
+        <h1>Description</h1>
         <p>
-          <span>Description</span>
-          <strong>
-            Geography app to learn world countries in a fun way.
-          </strong>
+          <span>Geography app to learn world countries in a fun way.</span><br>
+          <span><strong>Your mission, should you decide to accept it, is to validate all countries.</strong></span><br>
+          <span><strong>A country is validated as soon as you found it two times in only one try.</strong></span>
         </p>
+
+        <h1>Version</h1>
         <p>
-          <span>Version</span>
-          <strong><span>1.0.0</span></strong>
+          <span>1.0.0</span>
         </p>
+
+        <h1>License</h1>
         <p>
-          <span>License</span>
-          <strong><span>GNU Affero GPL v3.0</span></strong>
+          <span>GNU Affero GPL v3.0</span>
         </p>
+
+        <h1>Author</h1>
         <p>
-          <span>Author</span>
-          <strong><span>Valéry Febvre</span></strong>
+          <span>Valéry Febvre</span>
         </p>
+
+        <h1>Source Code</h1>
         <p>
-          <span>Source Code</span>
-          <strong><span>https://github.com/valos/WorldMapSkiller</span></strong>
+          <span><a href="https://github.com/valos/WorldMapSkiller" target="_blank">https://github.com/valos/WorldMapSkiller</a></span>
         </p>
       </section>
       <menu>
@@ -139,7 +162,6 @@
     </form>
   </section>
 
-  <!--···························· Activity indicator ····························-->
-  <section role="region" id="activity-indicator" class="hidden"></section>
+  <div id="splash-message"><span></span></div>
 </body>
 </html>

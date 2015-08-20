@@ -28,6 +28,19 @@
     border-radius: 3px !important;
 }
 
+.badge {
+    display: inline;
+    padding: 4px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: #FFF;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.25em;
+    background-color: #2ECC71;
+}
+
 section[role="region"] header h2 {
     padding: 0.8rem 1.5rem;
 }
@@ -39,41 +52,65 @@ section[role="region"] > header:first-child button {
     background: #C5EFF7 !important;
 }
 
+form[role="dialog"][data-type="confirm"] a {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/*
+ * Splash message
+ */
+
+#splash-message {
+    position: absolute;
+    top: 5rem;
+    height: calc(100% - 9.5rem); /* line-height is missing here, it's calculated via Javascript */
+    width: 100%;
+    text-align: center;
+    background: rgba(200, 200, 200, 0.3);
+}
+#splash-message > span {
+    vertical-align: middle;
+    font-size: 4rem;
+    font-weight: bold;
+    display: inline-block;
+    line-height: normal;
+}
+
 /*
  * Map boxes and overlay
  */
 
 .map-box {
-    right: 0px;
+    display: none;
+    right: 0;
     width: 100%;
     position: absolute;
     z-index: 2;
     pointer-events: none;
 }
-.map-box .content {
-    width: 100%;
-    padding: 4px 4px 2px 4px;
-    cursor: auto;
+.map-box > div {
     position: relative;
-    display: none;
+    padding: 4px 6px;
+    line-height: 2rem;
+    cursor: auto;
+    background: rgba(255, 255, 255, 0.7);
     pointer-events: auto;
 }
 
 #map-box-top {
     top: 5em;
 }
-#map-box-top .content {
-    background: rgba(255, 255, 255, 0.7);
+#map-box-top > div {
     box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.2);
 }
-#map-box-top .content .f32 {
+#map-box-top .f32 {
     float: right;
-    margin: 0 8px;
 }
-#map-box-top .content .f32 .flag {
+#map-box-top .f32 .flag {
     vertical-align: middle;
 }
-#map-box-top .content p {
+#map-box-top p {
     font-size: 1rem;
     line-height: 1.3rem;
     margin: 2px;
@@ -82,22 +119,11 @@ section[role="region"] > header:first-child button {
 #map-box-bottom {
     bottom: 4.5em;
 }
-#map-box-bottom .content {
-    background: rgba(255, 0, 0, 0.7);
+#map-box-bottom > div {
     box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.2);
 }
-
-#map-overlay {
-    position: absolute;
-    left: 0%;
-    top: 45%;
-    width: 100%;
-    text-align: center;
-    text-shadow: 1px 0 2px #DDDDDD;
-    font-size: 45px;
-    font-weight: bold;
-    color: #333;
-    z-index: 2;
+#map-box-bottom .wrong {
+    background: rgba(255, 0, 0, 0.7);
 }
 
 /*
@@ -119,7 +145,7 @@ section[role="region"] > header:first-child button {
 [role="toolbar"] button {
     color: white;
 }
-[class^="icon-"], [class*=" icon-"] {
+[role="toolbar"] [class^="icon-"], [role="toolbar"] [class*=" icon-"] {
     font-size: 2rem !important;
 }
 
@@ -130,20 +156,21 @@ section[role="region"] > header:first-child button {
 section[data-type="list"] li p:last-of-type {
     font-size: 1rem;
 }
-section[data-type="list"] li .f32 {
-    line-height: 4.5rem;
+section[data-type="list"] li aside.pack-start .f32,
+section[data-type="list"] li aside.pack-end span {
+    line-height: 6rem;
+}
+section[data-type="list"] li aside.pack-start .f32 .flag {
+    vertical-align: middle;
 }
 section[data-type="list"] aside.pack-end p {
     font-size: 1rem;
-    margin: 0;
     padding: 0 0 0 1.5rem;
     line-height: 1.5rem;
     color: #333;
 }
-
-#stats section:first-of-type p {
-    font-size: 1rem;
-    line-height: 1rem;
+section[data-type="list"] aside.pack-end span {
+    color: #2ECC71;
 }
 
 #stats-bar {
@@ -171,6 +198,15 @@ section[data-type="list"] aside.pack-end p {
     color: #fff;
     font-size: 1rem;
     line-height: 2rem;
+}
+
+#stats-bar-help p {
+    font-size: 1rem;
+    line-height: 1rem;
+}
+
+#stats-validated-counter {
+    font-size: 1rem;
 }
 
 /*

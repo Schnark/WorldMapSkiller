@@ -63,6 +63,36 @@
 		{
 			"icon": {
 				"paths": [
+					"M864 128l-480 480-224-224-160 160 384 384 640-640z"
+				],
+				"attrs": [],
+				"isMulticolor": false,
+				"tags": [
+					"checkmark",
+					"tick",
+					"correct",
+					"accept",
+					"ok"
+				],
+				"defaultCode": 58224,
+				"grid": 16
+			},
+			"attrs": [],
+			"properties": {
+				"id": 980,
+				"order": 10,
+				"prevSize": 32,
+				"code": 59920,
+				"ligatures": "checkmark, tick",
+				"name": "checkmark"
+			},
+			"setIdx": 2,
+			"setId": 7,
+			"iconIdx": 272
+		},
+		{
+			"icon": {
+				"paths": [
 					"M426.667 384h170.667v-128h128l-213.333-213.333-213.333 213.333h128v128zM384 426.667h-128v-128l-213.333 213.333 213.333 213.333v-128h128v-170.667zM981.333 512l-213.333-213.333v128h-128v170.667h128v128l213.333-213.333zM597.333 640h-170.667v128h-128l213.333 213.333 213.333-213.333h-128v-128z"
 				],
 				"attrs": [],

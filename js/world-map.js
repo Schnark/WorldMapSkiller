@@ -22,14 +22,17 @@
 
 function WorldMap() {
     var $page = $('#world-map');
-    var $mapBoxTop = $('#map-box-top .content').hide();
-    var $mapBoxBottom = $('#map-box-bottom .content').hide();
-    var $mapOverlay = $('#map-overlay').hide();
+    var $mapBoxTop = $('#map-box-top', $page).hide();
+    var $mapBoxTopContent = $('div', $mapBoxTop);
+    var $mapBoxBottom = $('#map-box-bottom', $page).hide();
+    var $mapBoxBottomContent = $('div', $mapBoxBottom);
 
     var started = false;
 
     var drawPile;
     var question;
+    var clickLock = false;
+    var validatedCounter;
 
     var map;
     var mainLayer;
@@ -76,7 +79,6 @@ function WorldMap() {
             'map',
             {zoomControl: false, attributionControl: false, worldCopyJump: true, minZoom: 1, maxZoom: 7});
         map.doubleClickZoom.disable();
-        resetMapView();
 
         mainLayer = L.geoJson(
             App.countries,
@@ -91,13 +93,26 @@ function WorldMap() {
                     };
                 },
                 onEachFeature: function(feature, layer) {
-                    countriesLayers[feature.properties.adm0_a3] = layer;
+                    countriesLayers[feature.properties.gu_a3] = layer;
                     layer.on({
-                        click: selectCountry
+                        click: function(e) {
+                            if (clickLock) {
+                                return;
+                            }
+                            clickLock = true;
+
+                            selectCountry(e);
+
+                            window.setTimeout(function() {
+                                clickLock = false;
+                            }, 100);
+                        }
                     });
                 }
             }
         ).addTo(map);
+
+        resetMapView();
     }
 
     function checkAnswer(layer) {
@@ -106,15 +121,9 @@ function WorldMap() {
         var correct;
         var stats;
 
-        if (question.code === layer.feature.properties.adm0_a3) {
+        if (question.code === layer.feature.properties.gu_a3) {
             distance = 0;
             correct = true;
-            if (!App.store.stats[question.code]) {
-                App.store.stats.write(question.code, [question.trials]);
-            }
-            else {
-                App.store.stats[question.code].push(question.trials);
-            }
         }
         else {
             // compute minimal distance between 2 polygons
@@ -139,16 +148,14 @@ function WorldMap() {
         var rnd;
         var index;
         var country;
-        var html;
+        var message;
 
         resetMapView();
 
-        if (drawPile.length === 0) {
-            startOrStop();
-
-            html = 'You reached end of ' + App.countries.length + ' countries. Congratulations!';
-            $mapBoxTop.html(html).show();
-
+        if (endOfMission()) {
+            return;
+        }
+        if (endOfPile()) {
             return;
         }
 
@@ -157,14 +164,43 @@ function WorldMap() {
         country = App.countries[index];
 
         question = App.getCountryInfo(country.properties);
-        question.trials = 0;
+        question.tries = 0;
 
-        html = '<span class="f32"><span class="flag ' + question.flag + '"></span></span>';
-        html += '<p>Where is <strong>' + question.name + '</strong>?<br>';
-        html += question.continent + ' (' + question.population + ' M people)</p>';
+        message = '<span class="f32"><span class="flag ' + question.flag + '"></span></span>';
+        message += '<p>Where is <strong>' + question.name + '</strong>?<br>';
+        message += question.continent + ' (' + question.population + ' M people)</p>';
 
-        $mapBoxTop.html(html).show();
-        $mapBoxBottom.hide();
+        showMapBoxTop(message);
+        hideMapBoxBottom();
+    }
+
+    function endOfPile() {
+        var message;
+        if (drawPile && drawPile.length === 0) {
+            startOrStop();
+
+            message = 'You reached end of countries list. Click on <span class="icon-play-arrow"></span> button to start again.';
+            showMapBoxTop(message);
+
+            return true;
+        }
+        return false;
+    }
+
+    function endOfMission() {
+        var message;
+
+        if (validatedCounter === App.countries.length) {
+            startOrStop();
+
+            message = '<p>Congratulations. Mission completed!</p>';
+            message += '<p>All countries has been validated. Your learning is ended.</p>';
+            message += '<p>To start over, go into <span class="icon-stats2"></span> <b>Statistics</b> and clear your scores.</p>';
+            showMapBoxTop(message);
+
+            return true;
+        }
+        return false;
     }
 
     function getCountryBiggestPolygon(layer) {
@@ -185,6 +221,16 @@ function WorldMap() {
         return biggest;
     }
 
+    function hideMapBoxBottom() {
+        $mapBoxBottom.hide();
+        $mapBoxBottomContent.removeClass().empty();
+    }
+
+    function hideMapBoxTop() {
+        $mapBoxTop.hide();
+        $mapBoxTopContent.empty();
+    }
+
     function resetMapView() {
         map.setView([48.48, 2.2], 1);
     }
@@ -192,6 +238,7 @@ function WorldMap() {
     function selectCountry(e) {
         var result;
         var message;
+        var validated;
 
         if (highlightedCountryLayer && highlightedCountryLayer.feature.properties.name === e.target.feature.properties.name) {
             return;
@@ -203,71 +250,93 @@ function WorldMap() {
         highlightedCountryLayer.setStyle({
             fillColor: '#22313F'
             //weight: 3,
-            //color: '#666'
+            //color: '#f33'
         });
 
         if (!started) {
             var info = App.getCountryInfo(highlightedCountryLayer.feature.properties);
-            var html = '<span class="f32"><span class="flag ' + info.flag + '"></span></span>';
-            html += '<p><strong>' + info.name + '</strong><br>';
-            html += info.continent + ' (' + info.population + ' M people)</p>';
+            message = '<span class="f32"><span class="flag ' + info.flag + '"></span></span>';
+            message += '<p><strong>' + info.name + '</strong><br>';
+            message += info.continent + ' (' + info.population + ' M people)</p>';
 
-            $mapBoxTop.html(html).show();
+            showMapBoxTop(message);
             return;
         }
-        
-        if (map.tap) {
-            map.tap.disable();
-        }
 
-        question.trials += 1;
+        question.tries += 1;
         result = checkAnswer(highlightedCountryLayer);
         if (result.correct) {
-            $mapBoxBottom.hide();
+            App.stats.addCountryScore(question.code, question.tries);
+            validated = App.stats.isCountryValidated(question.code);
 
-            message = 'Well done!!!';
-            $mapOverlay.html(message)
-                .removeClass()
-                .show()
-                .addClass(animations[Math.floor(Math.random() * animations.length)] + ' animated')
-                .one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
-                    window.setTimeout(function() {
-                        $mapOverlay.removeClass().hide();
+            message = 'Right. ' + question.tries;
+            message += question.tries > 1 ? ' tries.' : ' try.';
+            if (validated) {
+                validatedCounter += 1;
+                message += ' <span class="badge"><span class="icon-checkmark"></span> Validated</span>';
+            }
+            showMapBoxBottom(message);
 
-                        drawQuestion();
-
-                        if (map.tap) {
-                            map.tap.enable();
-                        }
-                    }, 1000);
-                });
+            message = validated ? 'Awesome. Country validated!' : 'Well done!!!';
+            App.showSplashMessage(message, null, drawQuestion);
         }
         else {
             if (result.distance <= 100) {
-                message = 'Missed. But you are very close.';
+                message = 'Wrong. But you are very close.';
             }
             else {
-                message = 'Missed. Far from ~' + result.distance + ' km.';
+                message = 'Wrong. Far from ~' + result.distance + ' km.';
             }
             message += ' It is <strong>' + highlightedCountryLayer.feature.properties.name_long + '</strong>.';
-            $mapBoxBottom.html(message).show();
-
-            if (map.tap) {
-                map.tap.enable();
-            }
+            showMapBoxBottom(message, 'wrong');
         }
     }
 
+    function showMapBoxBottom(message, classes) {
+        $mapBoxBottomContent.removeClass();
+        if (classes) {
+            $mapBoxBottomContent.addClass(classes);
+        }
+        $mapBoxBottomContent.html(message);
+        $mapBoxBottom.show();
+    }
+
+    function showMapBoxTop(message) {
+        $mapBoxTopContent.html(message);
+        $mapBoxTop.show();
+    }
+
     function startOrStop() {
+        var message;
+
+        drawPile = [];
+        validatedCounter = 0;
+        $.each(App.countries, function(id, country) {
+            if (App.stats.isCountryValidated(country.properties.gu_a3)) {
+                validatedCounter += 1;
+            }
+            else {
+                drawPile.push(id);
+            }
+        });
+
         if (!started) {
             started = true;
+            unselectCountry();
 
-            $('#btn-start').removeClass('icon-play-arrow').addClass('icon-stop');
-            $('#btn-next').css('visibility', 'visible');
+            if (endOfMission()) {
+                return;
+            }
+            else {
+                $('#btn-start').removeClass('icon-play-arrow').addClass('icon-stop');
+                $('#btn-next').css('visibility', 'visible');
 
-            drawPile = Array.apply(null, {length: App.countries.length}).map(Number.call, Number);
-
-            drawQuestion();
+                message = 'Ready?';
+                if (validatedCounter > 0) {
+                    message += '<br>' + (App.countries.length - validatedCounter) + ' countries remaining';
+                }
+                App.showSplashMessage(message, 'zoomInDown', drawQuestion);
+            }
         }
         else {
             started = false;
@@ -277,14 +346,15 @@ function WorldMap() {
 
             drawPile = null;
 
-            $mapBoxTop.hide();
-            $mapBoxBottom.hide();
+            hideMapBoxTop();
+            hideMapBoxBottom();
         }
     }
 
     function unselectCountry() {
         if (highlightedCountryLayer) {
             mainLayer.resetStyle(highlightedCountryLayer);
+            highlightedCountryLayer = null;
             //highlightedCountryLayer.bringToBack();
         }
     }

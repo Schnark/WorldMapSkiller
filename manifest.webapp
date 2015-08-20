@@ -13,5 +13,6 @@
     "name": "Valéry Febvre",
     "url": "https://github.com/valos/WorldMapSkiller"
   },
+  "default_locale": "en-US",
   "orientation": ["portrait"]
 }
