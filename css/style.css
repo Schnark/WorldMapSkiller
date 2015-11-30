@@ -56,6 +56,9 @@ form[role="dialog"][data-type="confirm"] a {
     text-decoration: none;
     color: rgba(255, 255, 255, 0.6);
 }
+form[role="dialog"][data-type="confirm"] ul {
+    border-top: none;
+}
 
 /*
  * Splash message
@@ -203,10 +206,6 @@ section[data-type="list"] aside.pack-end span {
 #stats-bar-help p {
     font-size: 1rem;
     line-height: 1rem;
-}
-
-#stats-validated-counter {
-    font-size: 1rem;
 }
 
 /*

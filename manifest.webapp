@@ -1,7 +1,7 @@
 {
   "name": "World Map Skiller",
   "description": "Geography app to learn world countries in a fun way.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "launch_path": "/app.html",
   "fullscreen": "false",
   "icons": {

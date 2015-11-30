@@ -20,6 +20,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+
 var App = {
     name: 'WorldMapSkiller',
     countries: null,
@@ -62,21 +63,26 @@ var App = {
         // init map overlay: set line-height CSS property
         App.$splashMessage.css('line-height', (window.innerHeight - 95) + 'px');
 
-        App.showSplashMessage('Loading...', 'none');
+        App.showSplashMessage(navigator.mozL10n.get('loading'), 'none');
 
         // load countries GeoJSON data and start app
         $.getJSON('data/ne_110m_admin_0_countries.geo.json', function(data) {
             App.countries = data.features;
 
-            App.worldMap = new WorldMap();
-            App.stats = new Stats();
+            navigator.mozL10n.once(function() {
+                App.worldMap = new WorldMap();
+                App.stats = new Stats();
 
-            App.hideSplashMessage();
+                App.hideSplashMessage();
+            });
         });
     },
 
     getCountryInfo: function(properties) {
         var flag;
+        var name = navigator.mozL10n.get(properties.name_long.replace(/ /g, '').replace(/\./g, '').replace(/'/g, ''));
+        var continent = navigator.mozL10n.get(properties.continent.replace(/ /g, '').replace(/\./g, ''));
+        var subregion = navigator.mozL10n.get(properties.subregion.replace(/ /g, '').replace(/\./g, ''));
 
         if ($.inArray(properties.name, ['England', 'Kosovo', 'Wales']) >= 0) {
              flag = '_' + properties.name;
@@ -90,8 +96,8 @@ var App = {
 
         return {
             code: properties.gu_a3,
-            name: properties.name_long,
-            continent: properties.continent + (properties.continent !== properties.subregion ? ' / ' + properties.subregion : ''),
+            name: name,
+            continent: continent + (properties.continent !== properties.subregion ? ' / ' + subregion : ''),
             population: (properties.pop_est / 1000000).toFixed(1),        
             flag: flag
         };

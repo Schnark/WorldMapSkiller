@@ -129,10 +129,10 @@ function Stats() {
                     html = '<span class="icon-checkmark"></span>';
                 }
                 else {
-                    html  = '<p>Best: ' + (scoreMin ? scoreMin : '-') + '</p>';
-                    html += '<p>Last: ' + (scoreLast ? scoreLast : '-') + '</p>';
-                    html += '<p>Worst: ' + (scoreMax ? scoreMax : '-') + '</p>';
-                    html += '<p>Avg.: ' + (scoreAvg ? scoreAvg.toFixed(1) : '-') + '</p>';
+                    html  = '<p>' + navigator.mozL10n.get('score-best', {value: scoreMin ? scoreMin : '-'}) + '</p>';
+                    html += '<p>' + navigator.mozL10n.get('score-last', {value: scoreLast ? scoreLast : '-'}) + '</p>';
+                    html += '<p>' + navigator.mozL10n.get('score-worst', {value: scoreMax ? scoreMax : '-'}) + '</p>';
+                    html += '<p>' + navigator.mozL10n.get('score-average', {value: scoreAvg ? scoreAvg.toFixed(1) : '-'}) + '</p>';
                 }
                 $('#score-' + code + ' .pack-end', $page).html(html);
             });
@@ -141,7 +141,9 @@ function Stats() {
             overallScoreLast = (overallScoreLast / statsSize).toFixed(1);
         }
 
-        $('#stats-validated-counter', $page).html('(' + validatedCounter + ' / ' + App.countries.length + ' validated)');
+        $('#stats-list-header h2', $page).html(
+            navigator.mozL10n.get('scores-by-country', {nb: validatedCounter, total: App.countries.length})
+        );
         $('#overall-score-avg', $page).html(overallScoreAvg ? overallScoreAvg : '-');
         $('#overall-score-min', $page).html(overallScoreMin ? overallScoreMin : '-');
         $('#overall-score-last', $page).html(overallScoreLast ? overallScoreLast : '-');

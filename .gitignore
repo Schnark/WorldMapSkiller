@@ -1,3 +1,4 @@
 build
 data/*.geo.json
+locales/worldmapskiller.countries.*
 untracked

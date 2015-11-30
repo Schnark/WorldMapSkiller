@@ -16,7 +16,7 @@ mkdir $VERSION
 cd $VERSION
 
 cp -r ../../* .
-rm -Rf build* untracked
+rm -Rf build* untracked locales/worldmapskiller.countries.*
 7z a ../$ARCHIVE_NAME *
 echo "New package build/$ARCHIVE_NAME was successfully created"
 

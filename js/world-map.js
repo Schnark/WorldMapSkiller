@@ -77,7 +77,8 @@ function WorldMap() {
 
         map = L.map(
             'map',
-            {zoomControl: false, attributionControl: false, worldCopyJump: true, minZoom: 1, maxZoom: 7});
+            {zoomControl: false, attributionControl: false, worldCopyJump: true, minZoom: 1, maxZoom: 7}
+        );
         map.doubleClickZoom.disable();
 
         mainLayer = L.geoJson(
@@ -167,8 +168,8 @@ function WorldMap() {
         question.tries = 0;
 
         message = '<span class="f32"><span class="flag ' + question.flag + '"></span></span>';
-        message += '<p>Where is <strong>' + question.name + '</strong>?<br>';
-        message += question.continent + ' (' + question.population + ' M people)</p>';
+        message += '<p>' + navigator.mozL10n.get('where-is-country', {country: question.name}) + '<br>';
+        message += question.continent + ' (' + navigator.mozL10n.get('nb-people', {population: question.population}) + ')</p>';
 
         showMapBoxTop(message);
         hideMapBoxBottom();
@@ -179,7 +180,7 @@ function WorldMap() {
         if (drawPile && drawPile.length === 0) {
             startOrStop();
 
-            message = 'You reached end of countries list. Click on <span class="icon-play-arrow"></span> button to start again.';
+            message = navigator.mozL10n.get('end-of-countries', {icon: '<span class="icon-play-arrow"></span>'});
             showMapBoxTop(message);
 
             return true;
@@ -193,9 +194,9 @@ function WorldMap() {
         if (validatedCounter === App.countries.length) {
             startOrStop();
 
-            message = '<p>Congratulations. Mission completed!</p>';
-            message += '<p>All countries has been validated. Your learning is ended.</p>';
-            message += '<p>To start over, go into <span class="icon-stats2"></span> <b>Statistics</b> and clear your scores.</p>';
+            message = '<p>' + navigator.mozL10n.get('end-of-mission-1') + '</p>';
+            message += '<p>' + navigator.mozL10n.get('end-of-mission-2') + '</p>';
+            message += '<p>' + navigator.mozL10n.get('end-of-mission-3', {icon: '<span class="icon-stats2"></span>'}) + '</p>';
             showMapBoxTop(message);
 
             return true;
@@ -236,6 +237,7 @@ function WorldMap() {
     }
 
     function selectCountry(e) {
+        var info;
         var result;
         var message;
         var validated;
@@ -253,11 +255,11 @@ function WorldMap() {
             //color: '#f33'
         });
 
+        info = App.getCountryInfo(highlightedCountryLayer.feature.properties);
         if (!started) {
-            var info = App.getCountryInfo(highlightedCountryLayer.feature.properties);
             message = '<span class="f32"><span class="flag ' + info.flag + '"></span></span>';
-            message += '<p><strong>' + info.name + '</strong><br>';
-            message += info.continent + ' (' + info.population + ' M people)</p>';
+            message += '<p><b>' + info.name + '</b><br>';
+            message += info.continent + ' (' + navigator.mozL10n.get('nb-people', {population: info.population}) + ')</p>';
 
             showMapBoxTop(message);
             return;
@@ -269,25 +271,27 @@ function WorldMap() {
             App.stats.addCountryScore(question.code, question.tries);
             validated = App.stats.isCountryValidated(question.code);
 
-            message = 'Right. ' + question.tries;
-            message += question.tries > 1 ? ' tries.' : ' try.';
+            message = navigator.mozL10n.get('answer-right', {tries: question.tries});
             if (validated) {
                 validatedCounter += 1;
-                message += ' <span class="badge"><span class="icon-checkmark"></span> Validated</span>';
+                message += ' <span class="badge">';
+                message += '<span class="icon-checkmark"></span> ';
+                message += navigator.mozL10n.get('validated');
+                message += '</span>';
             }
             showMapBoxBottom(message);
 
-            message = validated ? 'Awesome. Country validated!' : 'Well done!!!';
+            message = navigator.mozL10n.get(validated ? 'answer-right-splash-validated' : 'answer-right-splash');
             App.showSplashMessage(message, null, drawQuestion);
         }
         else {
             if (result.distance <= 100) {
-                message = 'Wrong. But you are very close.';
+                message = navigator.mozL10n.get('answer-wrong-1-close');
             }
             else {
-                message = 'Wrong. Far from ~' + result.distance + ' km.';
+                message = navigator.mozL10n.get('answer-wrong-1-far', {distance: result.distance});
             }
-            message += ' It is <strong>' + highlightedCountryLayer.feature.properties.name_long + '</strong>.';
+            message += ' ' + navigator.mozL10n.get('answer-wrong-2', {name: info.name});
             showMapBoxBottom(message, 'wrong');
         }
     }
@@ -331,9 +335,10 @@ function WorldMap() {
                 $('#btn-start').removeClass('icon-play-arrow').addClass('icon-stop');
                 $('#btn-next').css('visibility', 'visible');
 
-                message = 'Ready?';
+                message = navigator.mozL10n.get('start-splash-1');
                 if (validatedCounter > 0) {
-                    message += '<br>' + (App.countries.length - validatedCounter) + ' countries remaining';
+                    message += '<br>';
+                    message += navigator.mozL10n.get('start-splash-2', {nb: App.countries.length - validatedCounter});
                 }
                 App.showSplashMessage(message, 'zoomInDown', drawQuestion);
             }
