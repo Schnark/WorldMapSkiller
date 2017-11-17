@@ -1,3 +1,9 @@
+This repository is no longer active!
+===
+* If you want to see the original, go to https://github.com/valos/WorldMapSkiller.
+* If you want to see the currently maintained version, go to https://github.com/Schnark/world-map-skiller.
+
+
 World Map Skiller
 =====
 Firefox OS Mobile app
